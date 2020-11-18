@@ -11,8 +11,35 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style> img { width: 100%;}
+    .card-header{ border: 0px;}</style>
   </head>
   <body>
-    <div class="container"></div>
+    <div class="container"><div class="row" id="list"></div>
+    <script>
+  let requestURL = 'ezquiz.json'; 
+    let request = new XMLHttpRequest(); 
+    request.onreadystatechange = function () { 
+        if (request.readyState == 4 && request.status == 200) {             
+            dataReportStatus(JSON.parse(request.responseText));            
+        } }; 
+    request.open("GET", requestURL, true); 
+    request.send(); 
+    
+    function dataReportStatus(data) { 
+       
+       for(i=0;i < data.tracks.items.length;i++){
+
+        document.getElementById('list').innerHTML += '<div class="col-4">'+'<div class="card" style="width:;">'+ '<img src="' + data.tracks.items[i].album.images[0].url + '">' +'<div class="card-body"> <h4>'+ data.tracks.items[i].album.name +'</h4><br><p> Artist: '+data.tracks.items[i].artists[0].name+'</p> <br> <p> Release-Date: '+data.tracks.items[i].album.release_date+'</p><br><p> Avaliable: '+data.tracks.items[i].album.available_markets.length+' Countries</p></div>' +'</div>' +'</div>'
+           
+       }
+
+       
+                
+
+            
+
+    }
+    </script>
   </body>
 </html>
